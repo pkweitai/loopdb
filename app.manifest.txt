@@ -1,0 +1,16 @@
+bundle: app
+date:   20250901-202048
+cipher: aes-256-cbc
+src:    /Users/rex/app/service/loopdb/data/js
+
+# files:
+./actions.json
+./appboot.json
+./checkin_flow.json
+
+# sha256(zip):
+77e4a1dd535b071ab9d249c7440e652e31a70bd2e3129a7d9037184a52ecde0d  app.zip
+
+# sha256(enc):
+91aa30253ebea7414f9c363f9e7612233c9911859d28c278c84c553b2b47cbb8  app.zip.enc
+# size(enc): 0.01 MB
