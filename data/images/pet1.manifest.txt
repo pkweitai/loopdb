@@ -1,0 +1,22 @@
+bundle: pet1
+date:   20250902-094753
+cipher: aes-256-cbc
+src:    /Users/rex/app/service/loopdb/data/simages
+
+# files:
+pet1_0.png
+pet1_1.png
+pet1_2.png
+pet1_3.png
+pet1_4.png
+pet1_5.png
+pet1_6.png
+pet1_7.png
+pet1_8.png
+
+# sha256(zip):
+3a759f20738dba44024923363e390cc81d4c7c10632379a2a57c7b7a52947a09  pet1.zip
+
+# sha256(enc):
+0a33405fc93dd4b67ddb1ec4a1b1e0bce3b4a2b36c7625469ed9ff6c00c4f15a  pet1.zip.enc
+# size(enc): 1.67 MB

@@ -1,0 +1,22 @@
+bundle: pet82
+date:   20250902-094753
+cipher: aes-256-cbc
+src:    /Users/rex/app/service/loopdb/data/simages
+
+# files:
+pet82_0.png
+pet82_1.png
+pet82_2.png
+pet82_3.png
+pet82_4.png
+pet82_5.png
+pet82_6.png
+pet82_7.png
+pet82_8.png
+
+# sha256(zip):
+26816811dcc8b9880772fb8c3ace0cdcebdbb9d1f33cf29dafbd13f353c21ad5  pet82.zip
+
+# sha256(enc):
+9148c8ed559b74a259e999f8fbe1c11b3dd7a118a1a20699212cff95708fdede  pet82.zip.enc
+# size(enc): 1.05 MB

@@ -1,0 +1,22 @@
+bundle: pet15
+date:   20250902-094753
+cipher: aes-256-cbc
+src:    /Users/rex/app/service/loopdb/data/simages
+
+# files:
+pet15_0.png
+pet15_1.png
+pet15_2.png
+pet15_3.png
+pet15_4.png
+pet15_5.png
+pet15_6.png
+pet15_7.png
+pet15_8.png
+
+# sha256(zip):
+2790a69022b3368a919e26dd06af9751638da6c3f1a0c7f6351e85593a214ae5  pet15.zip
+
+# sha256(enc):
+1b6944c3eef5c8edef05abe28f56d4acb2b696048c3280f4178dd4e6f757bfea  pet15.zip.enc
+# size(enc): 1.62 MB

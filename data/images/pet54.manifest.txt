@@ -1,0 +1,22 @@
+bundle: pet54
+date:   20250902-094753
+cipher: aes-256-cbc
+src:    /Users/rex/app/service/loopdb/data/simages
+
+# files:
+pet54_0.png
+pet54_1.png
+pet54_2.png
+pet54_3.png
+pet54_4.png
+pet54_5.png
+pet54_6.png
+pet54_7.png
+pet54_8.png
+
+# sha256(zip):
+567bf105f3e422d4df3a0f413e0194240f1268834ed97ea3c2fec40c011d0d87  pet54.zip
+
+# sha256(enc):
+4fc2a06d0e5b4b7a2e0679e07ce50822a4ecf15f031b1e373b263fed0787be59  pet54.zip.enc
+# size(enc): 1.28 MB

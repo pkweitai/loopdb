@@ -1,0 +1,22 @@
+bundle: pet93
+date:   20250902-094753
+cipher: aes-256-cbc
+src:    /Users/rex/app/service/loopdb/data/simages
+
+# files:
+pet93_0.png
+pet93_1.png
+pet93_2.png
+pet93_3.png
+pet93_4.png
+pet93_5.png
+pet93_6.png
+pet93_7.png
+pet93_8.png
+
+# sha256(zip):
+c4ba7215ff6177772997f8169ac9b9806e5d32c859c894382698f1033dff3d7d  pet93.zip
+
+# sha256(enc):
+3888eb5214a94113d559d20743cf173ffc05d52580f70af741a39d70bfc35318  pet93.zip.enc
+# size(enc): 1.22 MB

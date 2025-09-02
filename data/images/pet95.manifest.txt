@@ -1,0 +1,22 @@
+bundle: pet95
+date:   20250902-094753
+cipher: aes-256-cbc
+src:    /Users/rex/app/service/loopdb/data/simages
+
+# files:
+pet95_0.png
+pet95_1.png
+pet95_2.png
+pet95_3.png
+pet95_4.png
+pet95_5.png
+pet95_6.png
+pet95_7.png
+pet95_8.png
+
+# sha256(zip):
+2128ea5631647493b03f86cd60588cbf251480f70cc39df0884d711c05921809  pet95.zip
+
+# sha256(enc):
+16b99fa50bf6a23df694a0115a3bde7dcc1ae5d87e2f13bd03cfc4a5848157bc  pet95.zip.enc
+# size(enc): 1.15 MB

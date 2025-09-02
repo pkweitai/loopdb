@@ -1,0 +1,22 @@
+bundle: pet76
+date:   20250902-094753
+cipher: aes-256-cbc
+src:    /Users/rex/app/service/loopdb/data/simages
+
+# files:
+pet76_0.png
+pet76_1.png
+pet76_2.png
+pet76_3.png
+pet76_4.png
+pet76_5.png
+pet76_6.png
+pet76_7.png
+pet76_8.png
+
+# sha256(zip):
+5e690e39f820a147cf37c4ad483ff0e58eec1d910aa70ceebf683bd027a415ab  pet76.zip
+
+# sha256(enc):
+325cd79cc93dd10c76c957d3f57f2a81a24756b5673dc8401564022e4ec388fa  pet76.zip.enc
+# size(enc): 1.40 MB

@@ -1,0 +1,22 @@
+bundle: pet87
+date:   20250902-094753
+cipher: aes-256-cbc
+src:    /Users/rex/app/service/loopdb/data/simages
+
+# files:
+pet87_0.png
+pet87_1.png
+pet87_2.png
+pet87_3.png
+pet87_4.png
+pet87_5.png
+pet87_6.png
+pet87_7.png
+pet87_8.png
+
+# sha256(zip):
+ab614dbdfd3b7b9cf2b3c5168280a57fbc790e3c0d54db063564b218f5a267ce  pet87.zip
+
+# sha256(enc):
+a7c5bf13793fd36d630903ef58666366077f8ebec4e9dbc8bf8b3e65f8927258  pet87.zip.enc
+# size(enc): 1.42 MB

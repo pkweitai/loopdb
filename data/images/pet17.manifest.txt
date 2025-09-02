@@ -1,0 +1,22 @@
+bundle: pet17
+date:   20250902-094753
+cipher: aes-256-cbc
+src:    /Users/rex/app/service/loopdb/data/simages
+
+# files:
+pet17_0.png
+pet17_1.png
+pet17_2.png
+pet17_3.png
+pet17_4.png
+pet17_5.png
+pet17_6.png
+pet17_7.png
+pet17_8.png
+
+# sha256(zip):
+d75b169e6b6d6d183a30838b398fb3cea3057d0d2a8c5d8c12a5d8df140b5606  pet17.zip
+
+# sha256(enc):
+5b605585399268154fe42f030e59f9c2d59d231a32107eded3857509f0da4e04  pet17.zip.enc
+# size(enc): 1.26 MB

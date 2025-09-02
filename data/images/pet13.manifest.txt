@@ -1,0 +1,22 @@
+bundle: pet13
+date:   20250902-094753
+cipher: aes-256-cbc
+src:    /Users/rex/app/service/loopdb/data/simages
+
+# files:
+pet13_0.png
+pet13_1.png
+pet13_2.png
+pet13_3.png
+pet13_4.png
+pet13_5.png
+pet13_6.png
+pet13_7.png
+pet13_8.png
+
+# sha256(zip):
+bdf61dc86de6a95eb67630162b9ff56b1d897915424e26462e7a7d93dbf2825d  pet13.zip
+
+# sha256(enc):
+d0bf3f88b970a7e97f41e36c8a0bb217c37b437baa42c29f3808e76c4e1a9830  pet13.zip.enc
+# size(enc): 1.65 MB
