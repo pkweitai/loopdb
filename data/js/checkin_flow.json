@@ -1,0 +1,262 @@
+{
+  "START": {
+    "q": "What do you want to work on right now?",
+    "answers": [
+      { "a": "💤 Sleep better", "react": "Let’s keep it simple—one easy win for tonight.", "next": "S1a", "score": 0 },
+      { "a": "🧘 Reduce stress", "react": "First, calm the body—then one tiny step.", "next": "ST1", "score": 0 },
+      { "a": "🎯 Improve focus", "react": "Clear one blocker and start small.", "next": "F1", "score": 0 },
+      { "a": "⚡ Boost energy", "react": "Quick lift now, protect your next hour.", "next": "E1", "score": 0 }
+    ]
+  },
+
+  "S0a": {
+  "q": "Welcome back! Want to keep tracking your current goal, or change it?",
+  "answers": [
+    { "a": "✅ Continue with current goal", "react": "Great — keeping momentum.", "next": "S1a", "score": 0 },
+    { "a": "🔄 Change my goal", "react": "No problem — let’s pick a new one.", "next": "START", "score": 0 }
+  ]
+  },
+
+
+  "S1a": {
+    "q": "Quick vibe check—how’s your mood right now?",
+    "answers": [
+      { "a": "😊 Pretty good", "react": "Love that—let’s use it to set up a solid night.", "next": "S1", "score": 6 },
+      { "a": "🙂 Fine/okay", "react": "Alright—small tweaks can make tonight easier.", "next": "S1", "score": 2 },
+      { "a": "😐 A bit off", "react": "Got it—we’ll keep it gentle and doable.", "next": "S1", "score": -4 },
+      { "a": "☹️ Down or worried", "react": "Thanks for sharing—let’s go extra kind on yourself tonight.", "next": "S1", "score": -8 }
+    ]
+  },
+
+  "S1": {
+    "q": "How was your sleep last night?",
+    "answers": [
+      { "a": "Fell asleep late", "react": "Let’s move shutdown cues a little earlier.", "next": "S2", "score": -12 },
+      { "a": "Woke up often", "react": "We’ll reduce those night-time triggers.", "next": "S3", "score": -14 },
+      { "a": "Woke too early", "react": "We’ll nudge your body clock earlier.", "next": "S2", "score": -10 },
+      { "a": "Slept enough but tired", "react": "Let’s boost sleep quality signals.", "next": "S4", "score": -8 }
+    ]
+  },
+
+  "S2": {
+    "q": "What might get in the way tonight?",
+    "answers": [
+      { "a": "Screen time before bed", "react": "We’ll set a chill, screen-free wind-down.", "next": "S2a", "score": -10 },
+      { "a": "Late caffeine/alcohol", "react": "Easy swap: caffeine by 2pm, no drinks 3h before bed.", "next": "S4", "score": -10 },
+      { "a": "Busy mind/worry", "react": "Let’s park thoughts with a 3-bullet brain dump.", "next": "M1", "score": -12 },
+      { "a": "Room too warm/bright/noisy", "react": "Light, noise, and temp are high-impact—easy fixes ahead.", "next": "ENV1", "score": -8 },
+      { "a": "Not sure", "react": "No worries—let’s try the biggest wins first.", "next": "ENV1", "score": -2 }
+    ]
+  },
+
+  "S2a": {
+    "q": "How long are you on screens in the last hour before bed?",
+    "answers": [
+      { "a": "<15 min", "react": "Nice—keep it brief and non-interactive.", "next": "S4", "score": 8 },
+      { "a": "15–45 min", "react": "Try dimming and swapping to passive audio.", "next": "ENV1", "score": 0 },
+      { "a": ">45 min", "react": "Let’s set a hard cutoff and park devices out of reach.", "next": "ENV1", "score": -8 }
+    ]
+  },
+
+  "S3": {
+    "q": "What tends to wake you up?",
+    "answers": [
+      { "a": "Noise or light", "react": "Let’s mask noise and block light consistently.", "next": "ENV1", "score": -6 },
+      { "a": "Bathroom trips", "react": "Ease up on liquids 2h before bed, quick bathroom before lights out.", "next": "S4", "score": -6 },
+      { "a": "Snoring/pauses (me or partner)", "react": "Could be a breathing thing—side-sleeping + talk to a clinician.", "next": "MED1", "score": -12 },
+      { "a": "Anxious thoughts", "react": "If awake >20 min, reset with a calm routine.", "next": "M1", "score": -8 }
+    ]
+  },
+
+  "S4": {
+    "q": "Pick a quick win for tonight:",
+    "answers": [
+      { "a": "No screens for 60 minutes", "react": "Phone outside the room; use an analog alarm.", "next": "FIN", "score": 12 },
+      { "a": "Cool, dark, quiet room", "react": "Thermostat 60–67°F, block light, add white noise.", "next": "FIN", "score": 10 },
+      { "a": "No caffeine after 2pm", "react": "Afternoon swap: herbal tea or water.", "next": "FIN", "score": 8 },
+      { "a": "10–15 minute wind-down", "react": "Breathe → gentle stretch → read. Same order nightly.", "next": "FIN", "score": 10 },
+      { "a": "Out of bed if awake >20 min", "react": "Dim room, quiet activity, return when sleepy.", "next": "FIN", "score": 8 }
+    ]
+  },
+
+  "ST1": {
+    "q": "What’s stressing you most?",
+    "answers": [
+      { "a": "Work/school stuff", "react": "We’ll lower mental load and add a bit of structure.", "next": "ST2", "score": -6 },
+      { "a": "Family/relationships", "react": "Regulate first, then chat or act.", "next": "ST2", "score": -6 },
+      { "a": "Money/uncertainty", "react": "Turn worries into one next step.", "next": "ST2", "score": -6 },
+      { "a": "General anxiety", "react": "Let’s do a fast down-shift first.", "next": "M1", "score": -8 }
+    ]
+  },
+
+  "ST2": {
+    "q": "How is it showing up for you?",
+    "answers": [
+      { "a": "Tense shoulders/jaw", "react": "We’ll do a 2-minute release.", "next": "ST3", "score": -4 },
+      { "a": "Fast heart/breath", "react": "Let’s slow the rate with paced breathing.", "next": "ST3", "score": -6 },
+      { "a": "Headache/pressure", "react": "Gentle neck work + reduce screen glare.", "next": "ST3", "score": -6 },
+      { "a": "Stomach flutters", "react": "Soften with slow breathing + gentle food.", "next": "ST3", "score": -6 },
+      { "a": "Mostly mental", "react": "Externalize thoughts, then reset.", "next": "M1", "score": -4 }
+    ]
+  },
+
+  "ST3": {
+    "q": "Pick a 2–5 minute reset:",
+    "answers": [
+      { "a": "Box / 4-7-8 breathing", "react": "Inhale 4 (nose) • hold 7 • exhale 8 (mouth) ×4.", "next": "ST4", "score": 6 },
+      { "a": "Shoulder/neck release", "react": "Slow rolls, gentle stretch, breathe with each move.", "next": "ST4", "score": 6 },
+      { "a": "Mini-meditation", "react": "Eyes soft, notice breath & sounds. Gently return when distracted.", "next": "ST4", "score": 6 },
+      { "a": "3-bullet plan", "react": "One outcome • first step • tiny timebox.", "next": "ST4", "score": 6 },
+      { "a": "Brief walk/fresh air", "react": "Easy pace, count 30 slow breaths.", "next": "ST4", "score": 6 }
+    ]
+  },
+
+  "ST4": {
+    "q": "Lock one boundary for the next hour:",
+    "answers": [
+      { "a": "Silence notifications", "react": "Turn on Do Not Disturb and flip the phone face-down.", "next": "FIN", "score": 6 },
+      { "a": "Single-task only", "react": "Pick one task. Close the rest.", "next": "FIN", "score": 6 },
+      { "a": "Micro break scheduled", "react": "25/5 timer—stand on the break.", "next": "FIN", "score": 6 },
+      { "a": "Quick de-clutter", "react": "60-second desk tidy. Just the area you see.", "next": "FIN", "score": 6 }
+    ]
+  },
+
+  "F1": {
+    "q": "What’s blocking focus?",
+    "answers": [
+      { "a": "Phone/notifications", "react": "We’ll shrink the pull right now.", "next": "F2", "score": -8 },
+      { "a": "Too many tasks", "react": "We’ll make it tiny and start.", "next": "F3", "score": -6 },
+      { "a": "Low motivation", "react": "A super small start breaks inertia.", "next": "F4", "score": -6 },
+      { "a": "Noisy space", "react": "Let’s control sound and visual clutter.", "next": "ENV2", "score": -6 }
+    ]
+  },
+
+  "F2": {
+    "q": "Choose a quick friction fix:",
+    "answers": [
+      { "a": "DND for 25 min", "react": "Turn on DND and put phone out of reach.", "next": "F5", "score": 6 },
+      { "a": "Move phone away", "react": "Other room or a drawer works great.", "next": "F5", "score": 6 },
+      { "a": "Close extra tabs/apps", "react": "One window only for this block.", "next": "F5", "score": 6 },
+      { "a": "Use a blocker", "react": "Flip on a site/app blocker for this session.", "next": "F5", "score": 6 }
+    ]
+  },
+
+  "F3": {
+    "q": "How do you want to shrink the pile?",
+    "answers": [
+      { "a": "ONE 10-minute task", "react": "Smallest step that moves the goal.", "next": "F5", "score": 6 },
+      { "a": "Top 3 for today", "react": "Write them and circle the first.", "next": "F5", "score": 6 },
+      { "a": "Timebox 25/5", "react": "25 minutes, one clear outcome.", "next": "F5", "score": 6 },
+      { "a": "Delegate/park one", "react": "Move one task off today’s plate.", "next": "F5", "score": 6 }
+    ]
+  },
+
+  "F4": {
+    "q": "Tiny start that feels doable:",
+    "answers": [
+      { "a": "Open the doc/app", "react": "Open it and read the first line.", "next": "F5", "score": 6 },
+      { "a": "Write one sentence", "react": "Messy is perfect—no editing.", "next": "F5", "score": 6 },
+      { "a": "Skim for 2 minutes", "react": "Skim headings, note one question.", "next": "F5", "score": 6 },
+      { "a": "Stand & breathe 1 min", "react": "10 slow breaths, then sit and begin.", "next": "F5", "score": 6 }
+    ]
+  },
+
+  "F5": {
+    "q": "Protect the next 25–50 minutes:",
+    "answers": [
+      { "a": "Commit to one outcome", "react": "Write it on a sticky or note.", "next": "FIN", "score": 6 },
+      { "a": "Break after 25", "react": "Stand, stretch, sip water.", "next": "FIN", "score": 6 },
+      { "a": "Stay in one window", "react": "One app, one thing. That’s it.", "next": "FIN", "score": 6 },
+      { "a": "Headphones on", "react": "Neutral ambient sound works great.", "next": "FIN", "score": 6 }
+    ]
+  },
+
+  "E1": {
+    "q": "How’s your energy right now?",
+    "answers": [
+      { "a": "Very low", "react": "We’ll do a quick reset—gentle and kind.", "next": "E2", "score": -8 },
+      { "a": "Meh/okay", "react": "Let’s nudge it up a bit.", "next": "E2", "score": -2 },
+      { "a": "Good", "react": "Nice—let’s use that window well.", "next": "E3", "score": 4 }
+    ]
+  },
+
+  "E2": {
+    "q": "Pick a quick boost:",
+    "answers": [
+      { "a": "5-minute walk/stretch", "react": "Stand now, slow shoulder rolls, then walk.", "next": "E4", "score": 8 },
+      { "a": "Water + light snack", "react": "Full glass + protein + fruit.", "next": "E4", "score": 8 },
+      { "a": "Sunlight/window", "react": "Face natural light for 3–5 minutes.", "next": "E4", "score": 8 },
+      { "a": "NSDR 5–10 min", "react": "Lie back, slow breathing, eyes closed.", "next": "E4", "score": 8 }
+    ]
+  },
+
+  "E3": {
+    "q": "Use your energy wisely:",
+    "answers": [
+      { "a": "Plan a focused sprint", "react": "One outcome, 30-minute timer.", "next": "FIN", "score": 6 },
+      { "a": "Schedule a short break", "react": "Block a 5-minute walk after.", "next": "FIN", "score": 6 },
+      { "a": "Prep a protein snack", "react": "Place it within reach now.", "next": "FIN", "score": 6 },
+      { "a": "Quick posture check", "react": "Chair height + screens to eye level.", "next": "FIN", "score": 6 }
+    ]
+  },
+
+  "E4": {
+    "q": "Keep the lift going for the next hour:",
+    "answers": [
+      { "a": "Stand every 20–30 min", "react": "Timer on, take 10 slow breaths when you stand.", "next": "FIN", "score": 4 },
+      { "a": "Ambient audio only", "react": "Non-lyrical sound helps focus.", "next": "FIN", "score": 4 },
+      { "a": "Hydration in reach", "react": "Water bottle right by you.", "next": "FIN", "score": 4 },
+      { "a": "Light snack ready", "react": "Small protein snack nearby.", "next": "FIN", "score": 4 }
+    ]
+  },
+
+  "ENV1": {
+    "q": "Bedroom quick fix for tonight:",
+    "answers": [
+      { "a": "Blackout / eye mask", "react": "Dark room or comfy eye mask.", "next": "FIN", "score": 6 },
+      { "a": "White noise / earplugs", "react": "Steady masking noise or earplugs.", "next": "FIN", "score": 6 },
+      { "a": "Cool room (60–67°F)", "react": "Lower temp or lighten bedding.", "next": "FIN", "score": 6 },
+      { "a": "Cover LEDs / declutter", "react": "Cover bright LEDs and clear surfaces.", "next": "FIN", "score": 6 }
+    ]
+  },
+
+  "ENV2": {
+    "q": "Workspace quick fix now:",
+    "answers": [
+      { "a": "Headphones + ambient", "react": "Neutral sound, less distraction.", "next": "FIN", "score": 6 },
+      { "a": "60-second desk clear", "react": "Only what you need stays.", "next": "FIN", "score": 6 },
+      { "a": "Sit/stand change", "react": "Switch posture, slow shoulder rolls.", "next": "FIN", "score": 6 },
+      { "a": "Face away from bed/TV", "react": "Turn your chair to reduce visual pull.", "next": "FIN", "score": 6 }
+    ]
+  },
+
+  "M1": {
+    "q": "Which mind tool fits right now?",
+    "answers": [
+      { "a": "Brain dump (2–3 bullets)", "react": "Three quick bullets—no editing.", "next": "FIN", "score": 6 },
+      { "a": "Guided breathing ~3 min", "react": "Slow exhale, count along, soften shoulders.", "next": "FIN", "score": 6 },
+      { "a": "NSDR/relax audio 5–10 min", "react": "Eyes closed, follow the audio and drift.", "next": "FIN", "score": 10 },
+      { "a": "Cognitive shuffle/imagery", "react": "Cycle through random safe images for 2–3 min.", "next": "FIN", "score": 6 }
+    ]
+  },
+
+  "MED1": {
+    "q": "Breathing-related sleep signs (pick any that apply):",
+    "answers": [
+      { "a": "Frequent loud snoring", "react": "Side-sleeping helps; also worth a clinician chat.", "next": "FIN", "score": -12 },
+      { "a": "Pauses or gasps noticed", "react": "Good idea to get a proper screening.", "next": "FIN", "score": -12 },
+      { "a": "AM headaches / dry mouth", "react": "Flag it with a clinician and track nights.", "next": "FIN", "score": -8 },
+      { "a": "None of these", "react": "Focus on timing, light, noise, and temp.", "next": "FIN", "score": 0 }
+    ]
+  },
+
+  "FIN": {
+    "q": "Ready to lock your mini-plan?",
+    "answers": [
+      { "a": "Yes—lock it in", "react": "Awesome. You’ve got this for the next block.", "next": null, "score": 12 },
+      { "a": "Yes—habit only", "react": "Sweet. Do the habit once and check back in.", "next": null, "score": 8 },
+      { "a": "Yes—environment only", "react": "Nice. Make the change now and notice how it feels.", "next": null, "score": 6 },
+      { "a": "Not now", "react": "All good. Pause here and come back when ready.", "next": null, "score": -10 }
+    ]
+  }
+}

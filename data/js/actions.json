@@ -1,0 +1,768 @@
+[
+  {
+    "metric": "stress",
+    "when": "very_high",
+    "actions": [
+      {
+        "action": "🫁 Box breathing + shoulder rolls (5 min)",
+        "tags": ["breathing","box","calm","stress"],
+        "description": {
+          "Sit easy": "Sit comfortably, relax your shoulders.",
+          "Inhale 4s • Hold 4s • Exhale 4s • Hold 4s": "Inhale four, hold four, exhale four, hold four.",
+          "Repeat 5–6 cycles": "Repeat for five to six cycles.",
+          "Shoulder rolls 5x forward/back": "Roll shoulders five times forward and back."
+        },
+        "phraseTimer": [75, 75, 75, 75],
+        "timer": 300,
+        "healing": "stress",
+        "intensity": "very low",
+        "environment": "indoor/quiet",
+        "musicTags": ["ambient","60bpm","breath"],
+        "videoTags": ["box breathing 5 minute"]
+      }
+    ]
+  },
+  {
+    "metric": "stress",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🚶 Easy nasal-breath walk (7 min)",
+        "tags": ["walk","nasal","calm"],
+        "description": {
+          "Walk easy pace": "Walk at a comfortable, easy pace.",
+          "Breathe through nose": "Breathe gently through your nose.",
+          "Arms loose": "Keep your arms soft and loose.",
+          "2 deeper breaths each minute": "Take two deeper breaths each minute."
+        },
+        "phraseTimer": [105, 105, 105, 105],
+        "timer": 420,
+        "healing": "stress",
+        "intensity": "low",
+        "environment": "outdoor/hallway",
+        "musicTags": ["lofi","soft beats","80-95bpm"],
+        "videoTags": ["mindful walking quick"]
+      }
+    ]
+  },
+  {
+    "metric": "stress",
+    "when": "very_low",
+    "actions": [
+      {
+        "action": "🧍 Light activator (4 min)",
+        "tags": ["activation","mobility"],
+        "description": {
+          "Calf raises 12x": "Do twelve slow calf raises.",
+          "Wall push 10x": "Ten gentle wall pushes.",
+          "Hip circles 10x/side": "Circle hips ten times each side.",
+          "2 slow deep breaths": "Finish with two slow, deep breaths."
+        },
+        "phraseTimer": [60, 60, 60, 60],
+        "timer": 240,
+        "healing": "focus",
+        "intensity": "low",
+        "environment": "indoor",
+        "musicTags": ["focus","soft piano"],
+        "videoTags": ["office energizer 5 minutes"]
+      }
+    ]
+  },
+
+  {
+    "metric": "recovery",
+    "when": "very_low",
+    "actions": [
+      {
+        "action": "🛌 NSDR / yoga nidra lite (8 min)",
+        "tags": ["nsdr","rest","recovery"],
+        "description": {
+          "Lie down": "Lie down and let your body soften.",
+          "Eyes closed": "Close your eyes and settle.",
+          "Follow short body scan": "Follow a short, gentle body scan.",
+          "Slow exhale": "Exhale slowly and fully."
+        },
+        "phraseTimer": [120, 120, 120, 120],
+        "timer": 480,
+        "healing": "recovery",
+        "intensity": "very low",
+        "environment": "dark/quiet",
+        "musicTags": ["nsdr","delta","soft drone"],
+        "videoTags": ["10 minute nsdr"]
+      }
+    ]
+  },
+  {
+    "metric": "recovery",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🚶 Maintain with easy walk (7 min)",
+        "tags": ["walk","recovery"],
+        "description": {
+          "Easy pace": "Walk at an easy, relaxed pace.",
+          "Relax shoulders": "Gently relax your shoulders.",
+          "Nasal breathing": "Breathe softly through your nose.",
+          "Short stretch after": "Finish with a short stretch."
+        },
+        "phraseTimer": [105, 105, 105, 105],
+        "timer": 420,
+        "healing": "recovery",
+        "intensity": "low",
+        "environment": "outdoor",
+        "musicTags": ["lofi","nature"],
+        "videoTags": ["mindful walking quick"]
+      }
+    ]
+  },
+
+  {
+    "metric": "restingHR_bpm",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🪑 Gentle warm-up (5 min)",
+        "tags": ["warmup","mobility","circulation"],
+        "description": {
+          "Ankle pumps 20x": "Pump your ankles twenty times.",
+          "March in place 30s": "March in place for thirty seconds.",
+          "Shoulder circles 10x": "Circle shoulders ten times.",
+          "Neck look L/R 5x": "Look left and right five times."
+        },
+        "phraseTimer": [75, 75, 75, 75],
+        "timer": 300,
+        "healing": "recovery",
+        "intensity": "low",
+        "environment": "indoor",
+        "musicTags": ["light acoustic","lofi"],
+        "videoTags": ["5 minute gentle warm up"]
+      }
+    ]
+  },
+  {
+    "metric": "restingHR_bpm",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🫁 4-6 breathing + feet up (6 min)",
+        "tags": ["breathing","calm"],
+        "description": {
+          "Lie down, feet on chair": "Lie down with feet resting on a chair.",
+          "Inhale 4s • Exhale 6s": "Inhale four seconds, exhale six.",
+          "Relax jaw/shoulders": "Relax your jaw and shoulders.",
+          "Repeat slow": "Continue slowly and gently."
+        },
+        "phraseTimer": [90, 90, 90, 90],
+        "timer": 360,
+        "healing": "stress",
+        "intensity": "very low",
+        "environment": "indoor/quiet",
+        "musicTags": ["ambient","breath"],
+        "videoTags": ["4 6 breathing 5 minutes"]
+      }
+    ]
+  },
+
+  {
+    "metric": "avgHR_bpm",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🚶 Recovery walk (6 min)",
+        "tags": ["walk","recovery"],
+        "description": {
+          "Easy pace": "Walk at an easy, relaxed pace.",
+          "Loose arms": "Keep your arms loose and easy.",
+          "Nasal breathing": "Breathe softly through your nose.",
+          "Sip water after": "Sip some water afterward."
+        },
+        "phraseTimer": [90, 90, 90, 90],
+        "timer": 360,
+        "healing": "recovery",
+        "intensity": "low",
+        "environment": "outdoor/hallway",
+        "musicTags": ["lofi","soft beats"],
+        "videoTags": ["easy recovery walk"]
+      }
+    ]
+  },
+  {
+    "metric": "avgHR_bpm",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🧍 Light activator (4 min)",
+        "tags": ["activation","mobility"],
+        "description": {
+          "Calf raises 12x": "Do twelve slow calf raises.",
+          "Arm swings 20s": "Swing arms gently for twenty seconds.",
+          "Hip circles 10x/side": "Circle hips ten times each side.",
+          "Nose breaths": "Take gentle breaths through your nose."
+        },
+        "phraseTimer": [60, 60, 60, 60],
+        "timer": 240,
+        "healing": "focus",
+        "intensity": "low",
+        "environment": "indoor",
+        "musicTags": ["focus","soft piano"],
+        "videoTags": ["office energizer 5 minutes"]
+      }
+    ]
+  },
+
+  {
+    "metric": "hrv_sdnn_ms",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🛌 NSDR reset (8 min)",
+        "tags": ["nsdr","recovery","calm"],
+        "description": {
+          "Lie down": "Lie down and let your body soften.",
+          "Scan toes→head": "Scan slowly from toes to head.",
+          "Slow exhale": "Exhale slowly and fully.",
+          "Stay still": "Stay still and restful."
+        },
+        "phraseTimer": [120, 120, 120, 120],
+        "timer": 480,
+        "healing": "recovery",
+        "intensity": "very low",
+        "environment": "dark/quiet",
+        "musicTags": ["nsdr","delta"],
+        "videoTags": ["10 minute nsdr"]
+      }
+    ]
+  },
+  {
+    "metric": "hrv_sdnn_ms",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🚶 Easy maintain walk (7 min)",
+        "tags": ["walk","recovery"],
+        "description": {
+          "Easy pace": "Walk at an easy, relaxed pace.",
+          "Nasal breathing": "Breathe softly through your nose.",
+          "Relax shoulders": "Gently relax your shoulders.",
+          "Short stretch after": "Finish with a short stretch."
+        },
+        "phraseTimer": [105, 105, 105, 105],
+        "timer": 420,
+        "healing": "recovery",
+        "intensity": "low",
+        "environment": "outdoor",
+        "musicTags": ["lofi","nature"],
+        "videoTags": ["mindful walking quick"]
+      }
+    ]
+  },
+
+  {
+    "metric": "respiratory_rate_bpm",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🫁 4-7-8 calm set (5 min)",
+        "tags": ["breathing","calm"],
+        "description": {
+          "Inhale 4s": "Inhale gently for four seconds.",
+          "Hold 7s": "Hold softly for seven seconds.",
+          "Exhale 8s": "Exhale slowly for eight seconds.",
+          "Repeat 4–5 cycles": "Repeat for four to five cycles."
+        },
+        "phraseTimer": [75, 75, 75, 75],
+        "timer": 300,
+        "healing": "anxiety",
+        "intensity": "very low",
+        "environment": "indoor/quiet",
+        "musicTags": ["ambient","breath"],
+        "videoTags": ["4 7 8 breathing 5 minutes"]
+      }
+    ]
+  },
+  {
+    "metric": "respiratory_rate_bpm",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🫁 Posture + side expansion (4 min)",
+        "tags": ["breathing","mobility"],
+        "description": {
+          "Sit tall": "Sit tall, lengthen your spine.",
+          "Hands on ribs": "Place your hands on your ribs.",
+          "Inhale to sides 4s": "Inhale to the sides for four seconds.",
+          "Exhale 6s x6": "Exhale six seconds, repeat six times."
+        },
+        "phraseTimer": [60, 60, 60, 60],
+        "timer": 240,
+        "healing": "focus",
+        "intensity": "very low",
+        "environment": "indoor",
+        "musicTags": ["soft strings"],
+        "videoTags": ["lateral rib breathing"]
+      }
+    ]
+  },
+
+  {
+    "metric": "blood_oxygen_pct",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🪟 Easy open-air breathing (5 min)",
+        "tags": ["breathing","no-retention"],
+        "description": {
+          "Sit by window": "Sit by an open window.",
+          "Inhale 4s • Exhale 6s": "Inhale four seconds, exhale six.",
+          "No breath holds": "Avoid any breath holds.",
+          "Stop if dizzy": "Stop immediately if you feel dizzy."
+        },
+        "phraseTimer": [75, 75, 75, 75],
+        "timer": 300,
+        "healing": "recovery",
+        "intensity": "very low",
+        "environment": "fresh air",
+        "musicTags": ["ambient"],
+        "videoTags": ["guided breathing 5 minutes"]
+      }
+    ]
+  },
+
+  {
+    "metric": "body_temp_c",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🧊 Cool-down rest (6 min)",
+        "tags": ["rest","cool"],
+        "description": {
+          "Shade or cool room": "Rest in shade or a cool room.",
+          "Slow 4-6 breathing": "Breathe slowly with four-six rhythm.",
+          "Sip water": "Sip cool water slowly.",
+          "Lie down 2 min": "Lie down and rest for two minutes."
+        },
+        "phraseTimer": [90, 90, 90, 90],
+        "timer": 360,
+        "healing": "recovery",
+        "intensity": "very low",
+        "environment": "cool/quiet",
+        "musicTags": ["ambient"],
+        "videoTags": ["relax cooling down"]
+      }
+    ]
+  },
+  {
+    "metric": "body_temp_c",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🧍 Warm-up stroll (6 min)",
+        "tags": ["walk","warmup"],
+        "description": {
+          "Walk indoors": "Walk indoors at a gentle pace.",
+          "Swing arms": "Let your arms swing freely.",
+          "Nasal breathing": "Breathe softly through your nose.",
+          "Light jacket if needed": "Wear a light jacket if needed."
+        },
+        "phraseTimer": [90, 90, 90, 90],
+        "timer": 360,
+        "healing": "focus",
+        "intensity": "low",
+        "environment": "indoor/hallway",
+        "musicTags": ["lofi"],
+        "videoTags": ["indoor walking warm up"]
+      }
+    ]
+  },
+
+  {
+    "metric": "sleep_minutes_asleep",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🛌 NSDR nap-alternative (10 min)",
+        "tags": ["nsdr","sleep"],
+        "description": {
+          "Lie down": "Lie down and let your body soften.",
+          "Follow body scan": "Follow a gentle body scan.",
+          "Slow exhale": "Exhale slowly and fully.",
+          "Stay still": "Stay still and restful."
+        },
+        "phraseTimer": [150, 150, 150, 150],
+        "timer": 600,
+        "healing": "sleep",
+        "intensity": "very low",
+        "environment": "dark/quiet",
+        "musicTags": ["nsdr","delta"],
+        "videoTags": ["10 minute nsdr"]
+      },
+      {
+        "action": "🌤️ Daylight stroll (8 min)",
+        "tags": ["walk","light","circadian"],
+        "description": {
+          "Go outside": "Step outside into daylight.",
+          "Look to sky (not sun)": "Look toward the sky, not the sun.",
+          "Walk easy": "Walk at an easy pace.",
+          "Deep breath each minute": "Take one deep breath each minute."
+        },
+        "phraseTimer": [120, 120, 120, 120],
+        "timer": 480,
+        "healing": "sleep",
+        "intensity": "low",
+        "environment": "outdoor",
+        "musicTags": ["acoustic"],
+        "videoTags": ["morning sunlight walk"]
+      }
+    ]
+  },
+  {
+    "metric": "sleep_minutes_asleep",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🧍 Gentle activator (4 min)",
+        "tags": ["activation","mobility"],
+        "description": {
+          "Calf raises 12x": "Do twelve slow calf raises.",
+          "Arm swings 20s": "Swing arms gently for twenty seconds.",
+          "Neck circles 5x": "Circle your neck five times.",
+          "Nose breaths": "Take gentle breaths through your nose."
+        },
+        "phraseTimer": [60, 60, 60, 60],
+        "timer": 240,
+        "healing": "focus",
+        "intensity": "low",
+        "environment": "indoor",
+        "musicTags": ["focus","soft beats"],
+        "videoTags": ["quick energizer 5 minutes"]
+      }
+    ]
+  },
+
+  {
+    "metric": "sleep_efficiency_0to1",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🌙 Wind-down stretch + 4-6 (7 min)",
+        "tags": ["sleep","stretch","breathing"],
+        "description": {
+          "Dim lights": "Dim the lights and unwind.",
+          "Hamstring reach 30s/side": "Hold a hamstring stretch, thirty seconds each side.",
+          "Chest open 30s": "Open your chest for thirty seconds.",
+          "Inhale 4s • Exhale 6s x6": "Inhale four, exhale six, repeat six times."
+        },
+        "phraseTimer": [105, 105, 105, 105],
+        "timer": 420,
+        "healing": "sleep",
+        "intensity": "very low",
+        "environment": "bedroom",
+        "musicTags": ["sleep","ambient"],
+        "videoTags": ["bedtime stretch 5 minutes"]
+      }
+    ]
+  },
+  {
+    "metric": "sleep_efficiency_0to1",
+    "when": "high",
+    "actions": [
+      {
+        "action": "📝 Gratitude wrap (4 min)",
+        "tags": ["mindfulness","gratitude"],
+        "description": {
+          "List 3 wins": "List three small wins today.",
+          "1 person to thank": "Think of one person to thank.",
+          "1 small thing next": "Choose one small next step."
+        },
+        "phraseTimer": [80, 80, 80],
+        "timer": 240,
+        "healing": "focus",
+        "intensity": "very low",
+        "environment": "indoor",
+        "musicTags": ["soft piano"],
+        "videoTags": ["gratitude practice 5 minutes"]
+      }
+    ]
+  },
+
+  {
+    "metric": "sleep_minutes_awake",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🛏️ If awake: calm reset (6 min)",
+        "tags": ["sleep","breathing"],
+        "description": {
+          "Leave bed briefly": "Leave the bed briefly.",
+          "Sit dim light": "Sit in a dim light.",
+          "Inhale 4s • Exhale 6s x8": "Inhale four, exhale six, repeat eight times.",
+          "Back to bed": "Return gently to bed."
+        },
+        "phraseTimer": [90, 90, 90, 90],
+        "timer": 360,
+        "healing": "sleep",
+        "intensity": "very low",
+        "environment": "dark/quiet",
+        "musicTags": ["sleep","soft drone"],
+        "videoTags": ["sleep breathing 5 minutes"]
+      }
+    ]
+  },
+
+  {
+    "metric": "sleep_minutes_inBed",
+    "when": "abnormal",
+    "actions": [
+      {
+        "action": "🌙 Fixed shut-down mini (5 min)",
+        "tags": ["routine","sleep"],
+        "description": {
+          "Screens off": "Turn screens off completely.",
+          "Write 1 worry → 1 next step": "Write one worry and one next step.",
+          "2 slow exhales": "Take two long, slow exhales.",
+          "Lights low": "Keep the lights low now."
+        },
+        "phraseTimer": [75, 75, 75, 75],
+        "timer": 300,
+        "healing": "sleep",
+        "intensity": "very low",
+        "environment": "bedroom",
+        "musicTags": ["sleep"],
+        "videoTags": ["bedtime routine quick"]
+      }
+    ]
+  },
+
+  {
+    "metric": "steps",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🚶 3×3 min micro-walks",
+        "tags": ["walk","snacks","movement"],
+        "description": {
+          "Walk 3 min": "Walk for three minutes.",
+          "Repeat x3 today": "Repeat this three times today.",
+          "Nasal breathing": "Breathe softly through your nose.",
+          "Shake arms lightly": "Shake your arms lightly."
+        },
+        "phraseTimer": [135, 135, 135, 135],
+        "timer": 540,
+        "healing": "recovery",
+        "intensity": "low",
+        "environment": "hallway/outdoor",
+        "musicTags": ["lofi"],
+        "videoTags": ["3 minute walking break"]
+      }
+    ]
+  },
+  {
+    "metric": "steps",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🧘 Calves + hips cool-down (5 min)",
+        "tags": ["stretch","cooldown"],
+        "description": {
+          "Calf stretch 30s/side": "Stretch calves thirty seconds each side.",
+          "Hip flexor 30s/side": "Stretch hip flexors thirty seconds each side.",
+          "Hamstrings 30s": "Stretch hamstrings for thirty seconds.",
+          "Slow breaths": "Take slow, soothing breaths."
+        },
+        "phraseTimer": [75, 75, 75, 75],
+        "timer": 300,
+        "healing": "recovery",
+        "intensity": "very low",
+        "environment": "indoor",
+        "musicTags": ["ambient"],
+        "videoTags": ["post walk stretch 5 minutes"]
+      }
+    ]
+  },
+
+  {
+    "metric": "exercise_minutes",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🪑 Chair flow (6 min)",
+        "tags": ["chair","mobility"],
+        "description": {
+          "Seated twist 20s/side": "Seated twist, twenty seconds each side.",
+          "Knee hug 20s/side": "Knee hug, twenty seconds each side.",
+          "Forward fold 20s": "Fold forward for twenty seconds.",
+          "Ankle pumps 15x": "Pump your ankles fifteen times."
+        },
+        "phraseTimer": [90, 90, 90, 90],
+        "timer": 360,
+        "healing": "focus",
+        "intensity": "low",
+        "environment": "office/home",
+        "musicTags": ["calm","lofi"],
+        "videoTags": ["chair yoga 5 minutes"]
+      }
+    ]
+  },
+  {
+    "metric": "exercise_minutes",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🛌 Legs-up wall + NSDR (8 min)",
+        "tags": ["recovery","nsdr","legs up"],
+        "description": {
+          "Lie near wall": "Lie near a wall and settle.",
+          "Legs up 2–3 min": "Raise legs up for two to three minutes.",
+          "Slow breathing": "Breathe slowly and comfortably.",
+          "Short NSDR track": "Start a short NSDR track."
+        },
+        "phraseTimer": [120, 120, 120, 120],
+        "timer": 480,
+        "healing": "recovery",
+        "intensity": "very low",
+        "environment": "indoor",
+        "musicTags": ["nsdr","ambient"],
+        "videoTags": ["legs up wall 5 minutes"]
+      }
+    ]
+  },
+
+  {
+    "metric": "distance_km",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🚶 Out-and-back (8 min)",
+        "tags": ["walk","distance"],
+        "description": {
+          "Walk 4 min out": "Walk out for four minutes.",
+          "Turn back 4 min": "Turn back for four minutes.",
+          "Nasal breathing": "Breathe softly through your nose.",
+          "Soft focus on horizon": "Keep a soft focus on the horizon."
+        },
+        "phraseTimer": [120, 120, 120, 120],
+        "timer": 480,
+        "healing": "recovery",
+        "intensity": "low",
+        "environment": "outdoor",
+        "musicTags": ["lofi","nature"],
+        "videoTags": ["8 minute walk"]
+      }
+    ]
+  },
+  {
+    "metric": "distance_km",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🧘 Hips + back ease (6 min)",
+        "tags": ["stretch","hips","back"],
+        "description": {
+          "Figure-4 30s/side": "Figure-four stretch, thirty seconds each side.",
+          "Child’s pose 30s": "Hold child’s pose for thirty seconds.",
+          "Cat–Cow x6": "Move gently through six Cat–Cows.",
+          "Deep exhale": "Take a long, deep exhale."
+        },
+        "phraseTimer": [90, 90, 90, 90],
+        "timer": 360,
+        "healing": "recovery",
+        "intensity": "very low",
+        "environment": "indoor",
+        "musicTags": ["ambient"],
+        "videoTags": ["hip stretch 5 minutes"]
+      }
+    ]
+  },
+
+  {
+    "metric": "active_energy_kcal",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🖐️ Desk reset (5 min)",
+        "tags": ["mobility","desk"],
+        "description": {
+          "Wrist flexor 20s/side": "Stretch wrist flexors twenty seconds each side.",
+          "Wrist extensor 20s/side": "Stretch wrist extensors twenty seconds each side.",
+          "Look L/R 5x": "Look left and right five times.",
+          "Ear-to-shoulder 5x/side": "Tilt ear to shoulder five times each side."
+        },
+        "phraseTimer": [75, 75, 75, 75],
+        "timer": 300,
+        "healing": "focus",
+        "intensity": "low",
+        "environment": "office/home",
+        "musicTags": ["focus","soft piano"],
+        "videoTags": ["office stretch 5 minutes"]
+      }
+    ]
+  },
+  {
+    "metric": "active_energy_kcal",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🧊 Cool shower breathe (4 min)",
+        "tags": ["cooldown","breathing"],
+        "description": {
+          "Cool shower 1–2 min": "Take a cool shower for one to two minutes.",
+          "Inhale 4s • Exhale 6s": "Inhale four seconds, exhale six.",
+          "Dry + light stretch": "Dry off, then do a light stretch."
+        },
+        "phraseTimer": [80, 80, 80],
+        "timer": 240,
+        "healing": "recovery",
+        "intensity": "very low",
+        "environment": "bathroom",
+        "musicTags": ["ambient"],
+        "videoTags": ["post workout cooldown 5 minutes"]
+      }
+    ]
+  },
+
+  {
+    "metric": "mindfulness_minutes",
+    "when": "low",
+    "actions": [
+      {
+        "action": "🧘 3-min sit + 2 breaths (5 min)",
+        "tags": ["mindfulness","breathing"],
+        "description": {
+          "Sit comfy": "Sit comfortably and relax.",
+          "Set 3-min timer": "Set a three-minute timer.",
+          "Notice inhale/exhale": "Notice each inhale and exhale.",
+          "Finish with 2 slow exhales": "Finish with two slow exhales."
+        },
+        "phraseTimer": [75, 75, 75, 75],
+        "timer": 300,
+        "healing": "anxiety",
+        "intensity": "very low",
+        "environment": "quiet corner",
+        "musicTags": ["calm","soft bell"],
+        "videoTags": ["3 minute mindfulness"]
+      }
+    ]
+  },
+  {
+    "metric": "mindfulness_minutes",
+    "when": "high",
+    "actions": [
+      {
+        "action": "🧘 Gratitude wrap (4 min)",
+        "tags": ["mindfulness","gratitude"],
+        "description": {
+          "List 3 wins": "List three small wins today.",
+          "1 person to thank": "Think of one person to thank.",
+          "1 small thing next": "Choose one small next step."
+        },
+        "phraseTimer": [80, 80, 80],
+        "timer": 240,
+        "healing": "focus",
+        "intensity": "very low",
+        "environment": "indoor",
+        "musicTags": ["soft piano"],
+        "videoTags": ["gratitude practice 5 minutes"]
+      }
+    ]
+  }
+]
