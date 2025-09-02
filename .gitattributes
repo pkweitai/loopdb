@@ -1,0 +1,1 @@
+*.zip.enc !text !filter !merge !diff
