@@ -1,5 +1,5 @@
 bundle: app
-date:   20250902-181035
+date:   20250902-181417
 cipher: aes-256-cbc
 src:    /Users/rex/app/service/loopdb/data/js
 
@@ -9,8 +9,8 @@ src:    /Users/rex/app/service/loopdb/data/js
 ./checkin_flow.json
 
 # sha256(zip):
-20e69b59def57321238f4c5131a995ae168c0547e82107db08aa7f147fb17a94  app.zip
+187ebd8237723ceca6f815dfacccad2cbc8710f677f83bbd1895b847d838d55b  app.zip
 
 # sha256(enc):
-2bf14fdf1775266e8fa51b045cb3e157160047f2a77663ad9c209f6a230a58f6  app.zip.enc
+74388ffa53c8389eb6892559664da18114f4dd388fe35f813e4043c568af81f8  app.zip.enc
 # size(enc): 0.01 MB
