@@ -111,13 +111,38 @@ def _set_versions(appboot: dict, app_v: str, model_v: str):
         appboot['model_version'] = model_v
     return appboot
 
-def _download(url: str, dest: Path):
+from urllib.parse import urlparse, urlunparse, parse_qsl, urlencode
+from datetime import datetime
+
+def _download(url: str, dest: Path, force: bool = False):
+    """
+    Download URL to dest.
+    If force=True, append a cache-busting query param and send no-cache headers.
+    """
     dest.parent.mkdir(parents=True, exist_ok=True)
-    req = Request(url, headers={'User-Agent': 'appboot-portal/1.0'})
+
+    effective_url = url
+    if force:
+        pr = urlparse(url)
+        q = dict(parse_qsl(pr.query))
+        q['_cb'] = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')
+        pr = pr._replace(query=urlencode(q))
+        effective_url = urlunparse(pr)
+
+    req = Request(
+        effective_url,
+        headers={
+            'User-Agent': 'appboot-portal/1.0',
+            # best-effort cache busting at CDNs/proxies:
+            'Cache-Control': 'no-cache, no-store, max-age=0',
+            'Pragma': 'no-cache',
+        }
+    )
     with urlopen(req, timeout=60) as r:
         data = r.read()
     dest.write_bytes(data)
     return len(data)
+
 
 def _clear_preview_dirs():
     if PREVIEW_DIR.exists():
@@ -253,14 +278,14 @@ def api_preview_fetch():
     data = request.get_json(force=True, silent=True) or {}
     url = (data.get('url') or DEFAULT_CLOUD_URL).strip()
     passphrase = (data.get('passphrase') or '').strip()
-
+    force = bool(data.get('force', False))  # NEW
     try:
         _clear_preview_dirs()
         enc_path = PREVIEW_DIR / 'cloud.app.zip.enc'
         zip_path = PREVIEW_DIR / 'cloud.app.zip'
 
         # 1) download
-        size = _download(url, enc_path)
+        size = _download(url, enc_path, force=force)
 
         # 2) decrypt via payload.sh --decrypt
         args = [str(PAYLOAD), '--decrypt', '-i', str(enc_path), '-O', str(zip_path)]

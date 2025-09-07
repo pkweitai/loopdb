@@ -33,11 +33,15 @@
       <h3 style="margin-top:16px">Cloud Preview</h3>
       <div class="cloud-box">
         <input id="cloud-url" type="text" placeholder="https://.../app.zip.enc"
-               value="{{ default_cloud_url|safe }}">
-        <button id="btn-fetch">Fetch & Preview</button>
+              value="{{ default_cloud_url|safe }}">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <label><input type="checkbox" id="chk-force" checked> Force fresh</label>
+          <button id="btn-fetch">Fetch & Preview</button>
+        </div>
         <div id="cloud-status" class="ghost" style="margin-top:6px"></div>
         <ul id="preview-list"></ul>
       </div>
+
     </aside>
 
     <section id="editor">

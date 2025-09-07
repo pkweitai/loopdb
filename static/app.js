@@ -18,6 +18,8 @@ const $cloudUrl = document.getElementById('cloud-url');
 const $btnFetch = document.getElementById('btn-fetch');
 const $cloudStatus = document.getElementById('cloud-status');
 const $previewList = document.getElementById('preview-list');
+const $chkForce = document.getElementById('chk-force');
+
 
 function setStatus(msg, ok=true) {
   $status.textContent = msg;
@@ -155,7 +157,11 @@ $btnFetch.onclick = async () => {
     const res = await fetch('/api/preview_fetch', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ url: $cloudUrl.value, passphrase: $pass.value })
+      body: JSON.stringify({
+        url: $cloudUrl.value,
+        passphrase: $pass.value,
+        force: !!$chkForce?.checked    // NEW: force fresh download
+      })
     });
     const data = await res.json();
     if (!data.ok) {
@@ -164,8 +170,9 @@ $btnFetch.onclick = async () => {
     }
     setCloudStatus(`Downloaded ${data.download_bytes} bytes. Decrypted. ${data.entries.length} files in zip.`);
 
-    // list entries; click to open JSONs
+    // render list & make JSONs clickable
     const entries = data.entries || [];
+    $previewList.innerHTML = '';
     for (const ent of entries) {
       const li = document.createElement('li');
       li.textContent = `${ent.name} (${ent.size} B)`;
@@ -185,11 +192,27 @@ $btnFetch.onclick = async () => {
       }
       $previewList.appendChild(li);
     }
+
+    // Auto-open the preview's appboot.json if present
+    const appbootEnt = entries.find(e =>
+      e.name.toLowerCase() === 'appboot.json' ||
+      e.name.toLowerCase().endsWith('/appboot.json')
+    );
+    if (appbootEnt) {
+      const r = await fetch('/api/preview_read?name=' + encodeURIComponent(appbootEnt.name));
+      const d = await r.json();
+      if (d.ok) {
+        $filename.textContent = 'PREVIEW: ' + d.name;
+        $content.value = d.text;
+        setStatus('Previewing ' + d.name);
+      }
+    }
   } catch (e) {
     setCloudStatus('Exception: ' + e, false);
   } finally {
     $btnFetch.disabled = false;
   }
 };
+
 
 loadList();
