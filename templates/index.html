@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Appboot Portal</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>Appboot Portal</h1>
+    <div class="actions">
+      <div id="vers" class="ghost"></div>
+      <span class="sep"></span>
+      <label class="ghost"><input type="checkbox" id="chk-app" checked> bump appVersion</label>
+      <label class="ghost"><input type="checkbox" id="chk-model" checked> bump modelVersion</label>
+      <span class="sep"></span>
+      <button id="btn-pretty">Pretty</button>
+      <button id="btn-save">Save</button>
+      <button id="btn-reload">Reload</button>
+      <span class="sep"></span>
+      <input id="passphrase" type="password" placeholder="Passphrase (optional)" />
+      <button id="btn-build">Build & Push (-u)</button>
+      <a id="manifest-link" href="/manifest" target="_blank" class="ghost">manifest</a>
+    </div>
+  </header>
+
+  <main>
+    <aside>
+      <h3>JSON Files</h3>
+      <ul id="file-list"></ul>
+
+      <h3 style="margin-top:16px">Cloud Preview</h3>
+      <div class="cloud-box">
+        <input id="cloud-url" type="text" placeholder="https://.../app.zip.enc"
+               value="{{ default_cloud_url|safe }}">
+        <button id="btn-fetch">Fetch & Preview</button>
+        <div id="cloud-status" class="ghost" style="margin-top:6px"></div>
+        <ul id="preview-list"></ul>
+      </div>
+    </aside>
+
+    <section id="editor">
+      <div id="filename"></div>
+      <textarea id="content" spellcheck="false"></textarea>
+      <div id="status-bar">
+        <span id="status">Ready.</span>
+      </div>
+      <pre id="log" class="hidden"></pre>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
