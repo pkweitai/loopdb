@@ -3,6 +3,7 @@
 # Modes:
 #   -u       : single-bundle (subject "appboot vX.Y")
 #   -uimage  : per-pet bundles (subject "assets version X.Y")
+#   -x       : decrypt only (with -i <in.enc> -O <out.zip>)
 # deps: zip, openssl, git
 # Safe-guards:
 #   • Never (re)enable Git LFS for *.enc
@@ -29,11 +30,16 @@ SRC_SET=false
 OUT_SET=false
 DST_SET=false
 
-# --- New decrypt flags ---
+# Decrypt flags
 DECRYPT=false
 DEC_IN=""
 DEC_OUT=""
 
+# ---------- Allowlist for single-bundle ----------
+# Only these top-level JSON files are shipped (no recursion).
+: ${ALLOW_JSON:="appboot.json checkin_flow.json actions.json"}
+# Optionally include top-level PNGs next to JSONs (set to "" to disable).
+: ${ALLOW_PNG_GLOB:="*.png"}
 
 usage() {
   cat <<'USAGE'
@@ -50,11 +56,10 @@ Options:
   --keep-zip            Keep intermediate .zip (default: delete)
   -u, --update          One bundle; defaults -s ./ -d ./ -o app; commit "appboot vX.Y"
   -uimage               Per-pet bundles; defaults -s ./ -d ./images; commit "assets version X.Y"
+  -x, --decrypt         Decrypt only (requires -i <enc> and -O <zip>)
+  -i, --in <file>       Input encrypted file for --decrypt
+  -O, --out <file>      Output zip file for --decrypt
   -h, --help            Help
-  -x|--decrypt) DECRYPT=true; shift ;;
- -i|--in)      DEC_IN="$2"; shift 2 ;;
--O|--out)     DEC_OUT="$2"; shift 2 ;;
-
 USAGE
 }
 
@@ -117,10 +122,12 @@ strip_lfs_rules_for_enc() {
     if grep -Eq 'filter=lfs' "$ga"; then
       # surgical remove: lines that target *.enc and use filter=lfs
       run "sed -i.bak -E '/filter=lfs/ { /(^|[[:space:]])[^#]*\\.enc([^[:alnum:]_]|$)/d; }' $ga"
-      # also purge the weird leftover rules seen before
-      run "sed -i '' -e '/^patterns[[:space:]]\+filter=lfs/d' -e '/^see[[:space:]]\+filter=lfs/d' $ga" 2>/dev/null || true
+      # also purge weird leftover rules seen before (best-effort)
+      run "sed -i '' -e '/^patterns[[:space:]]\\+filter=lfs/d' -e '/^see[[:space:]]\\+filter=lfs/d' $ga" 2>/dev/null || true
       # if empty after edits, remove it (keeps repo clean)
       [[ -s "$ga" ]] || run "rm -f $ga"
+      # remove sed backup
+      [[ -f "$ga.bak" ]] && run "rm -f '$ga.bak'"
     fi
   done
 
@@ -151,6 +158,50 @@ reindex_as_normal_blob() {
     run "git rm --cached -- '$p'" || true
     run "git add -- '$p'"
   done
+}
+
+# ---------- Clean junk in source (only under SRC root) ----------
+clean_preview_and_bak() {
+  local src="$1"
+  if [[ -d "$src/_preview" ]]; then
+    log "🧹 Removing preview dir: $src/_preview"
+    run "rm -rf '$src/_preview'"
+  fi
+  # remove top-level .bak* files (e.g., appboot.json.bak.2025..., *.bak)
+  log "🧹 Removing top-level *.bak* in: $src"
+  run "find '$src' -maxdepth 1 -type f -name '*.bak*' -print -delete || true"
+}
+
+# ---------- Build staging dir with allow-listed files ----------
+build_single_bundle_stage() {
+  local stage="$1"
+  local src="$2"
+  mkdir -p "$stage"
+
+  local missing=()
+  for f in ${(z)ALLOW_JSON}; do
+    if [[ -f "$src/$f" ]]; then
+      cp "$src/$f" "$stage/"
+    else
+      missing+=("$f")
+    fi
+  done
+  if (( ${#missing} > 0 )); then
+    echo "❌ Missing required file(s): ${missing[*]} in $src"
+    exit 1
+  fi
+
+  # Optional top-level PNGs
+  if [[ -n "$ALLOW_PNG_GLOB" ]]; then
+    for p in "$src"/$ALLOW_PNG_GLOB(N); do
+      [[ -f "$p" ]] && cp "$p" "$stage/"
+    done
+  fi
+}
+
+count_stage_files() {
+  local stage="$1"
+  (cd "$stage" && print -rl -- *(.N) | wc -l | tr -d ' ')
 }
 
 # ---------- Parse args ----------
@@ -203,21 +254,9 @@ if [[ -z "${PASS:-}" ]]; then
   [[ -z "$PASS" ]] && { echo "❌ No passphrase provided"; exit 1; }
 fi
 
-
 # ---------- Mode: decrypt only ----------
 if $DECRYPT; then
   [[ -n "${DEC_IN}" && -n "${DEC_OUT}" ]] || { echo "❌ For --decrypt, pass -i <enc> and -O <zip>"; exit 1; }
-  # Load env if present (so PASS may come from .env)
-  if [[ -f "$ENV_FILE" ]]; then
-    set -a; source "$ENV_FILE"; set +a
-  fi
-  # Passphrase
-  PASS="${KEY_FROM_ARG:-${PASS:-}}"
-  if [[ -z "${PASS:-}" ]]; then
-    read -rs "PASS?Enter encryption passphrase: "
-    echo
-    [[ -z "$PASS" ]] && { echo "❌ No passphrase provided"; exit 1; }
-  fi
   CIPHER="${CIPHER:-aes-256-cbc}"
   echo "🔓 Decrypting:"
   echo "  in : $DEC_IN"
@@ -231,7 +270,6 @@ if $DECRYPT; then
   echo "✅ Decrypted to: $DEC_OUT"
   exit 0
 fi
-
 
 # ---------- Paths ----------
 [[ -d "$SRC_DIR" ]] || { echo "❌ Source dir not found: $SRC_DIR"; exit 1; }
@@ -363,16 +401,21 @@ MANIFEST_PATH="${OUT_DIR_ABS%/}/${OUT_NAME}.manifest.txt"
 if $UPDATE; then
   log "🧹 Cleaning old bundle(s) for base '${OUT_NAME}' in ${OUT_DIR_ABS}"
   run "rm -f '$ZIP_PATH' '$ENC_PATH' '$MANIFEST_PATH'"
+  # also remove preview/junk from source so it can't sneak into future ops
+  clean_preview_and_bak "$SRC_DIR_ABS"
 fi
 
-file_count=$(find "$SRC_DIR_ABS" -type f \( -name '*.json' -o -name '*.png' \) | wc -l | tr -d ' ')
-[[ "$file_count" -gt 0 ]] || { echo "❌ No .json or .png found in $SRC_DIR_ABS"; exit 1; }
+# Stage only allow-listed files (no recursion)
+STAGE_DIR="$(mktemp -d "${TMPDIR:-/tmp}/payload_stage.XXXXXX")"
+trap 'rm -rf "$STAGE_DIR"' EXIT
 
-log "📦 Zipping $file_count file(s) (*.json, *.png) from: $SRC_DIR_ABS"
-(
-  cd "$SRC_DIR_ABS"
-  run "zip -r -q -9 '$ZIP_PATH' . -i '*.json' '*.png'"
-)
+build_single_bundle_stage "$STAGE_DIR" "$SRC_DIR_ABS"
+file_count="$(count_stage_files "$STAGE_DIR")"
+[[ "$file_count" -gt 0 ]] || { echo "❌ Nothing to package (stage empty)"; exit 1; }
+
+log "📦 Zipping $file_count file(s) from stage (allowlist only)"
+# -j: junk paths; -X: strip extra attrs; -9: max compression
+run "zip -j -X -q -9 '$ZIP_PATH' '$STAGE_DIR'/*"
 
 ZIP_SHA="$(sha256_of "$ZIP_PATH")"
 
@@ -382,8 +425,8 @@ ZIP_SHA="$(sha256_of "$ZIP_PATH")"
   echo "cipher: ${CIPHER}"
   echo "src:    ${SRC_DIR_ABS}"
   echo
-  echo "# files:"
-  (cd "$SRC_DIR_ABS" && find . -type f \( -name '*.json' -o -name '*.png' \) -print | sort)
+  echo "# files (allowlist):"
+  (cd "$STAGE_DIR" && print -rl -- *(.N) | sort)
   echo
   echo "# sha256(zip):"
   echo "$ZIP_SHA  ${OUT_NAME}.zip"
@@ -414,7 +457,7 @@ if $UPDATE; then
   PREV_VER="$(prev_version_appboot || true)"
   NEXT_VER="$(next_version "$PREV_VER")"
 
-  # Ensure normal blob for *.enc
+  # Ensure normal blob for *.enc and manifest (no LFS)
   reindex_as_normal_blob "$ENC_PATH" "$MANIFEST_PATH"
 
   run "git -C '$OUT_DIR_ABS' add '${OUT_NAME}.zip.enc' '${OUT_NAME}.manifest.txt'"

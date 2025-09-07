@@ -1,3 +1,0 @@
-patterns filter=lfs diff=lfs merge=lfs -text
-see filter=lfs diff=lfs merge=lfs -text
-*.zip.enc !text !filter !merge !diff
