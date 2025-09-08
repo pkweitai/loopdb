@@ -1,15 +1,15 @@
 {
-  "appVersion": "1.0.6",
+  "appVersion": "1.0.16",
   "modelVersion": "2025-09-07-hf",
   "privacy": {
-    "allow_event": false,
+    "allow_event": true,
     "allow_analytics": false,
-    "allow_notification": true,
-    "allow_healthtracking": true
+    "allow_notification": false,
+    "allow_healthtracking": false
   },
   "ops": {
     "notification": {
-      "event_frequency_minutes": 360
+      "event_frequency_minutes": 180
     },
     "logs": {
       "upload_frequency_minutes": 1440,
@@ -20,13 +20,18 @@
     "owner": "pkweitai",
     "repo": "x1",
     "branch": "main",
-    "token": ""
+    "token": "",
+    "token_enc": "aesgcm:v1:C2O8Niiapx2Rrn2cV-9LFw:L2rHSqnMbfBbE-ek::lajkkP94mc4zFCjTlB755w"
   },
   "ads": {
     "ios": {
-      "banner": "ca-app-pub-3216213363779665/9361550277",
-      "interstitial": "ca-app-pub-3216213363779665~8148255540",
-      "rewarded": "ca-app-pub-3216213363779665/2781212945"
+      "appId": "ca-app-pub-3940256099942544~1458002511",
+      "banner": "ca-app-pub-3940256099942544/2934735716",
+      "interstitial": "ca-app-pub-3940256099942544/4411468910",
+      "rewarded": "ca-app-pub-3940256099942544/1712485313",
+      "native": "ca-app-pub-3940256099942544/3986624511",
+      "appOpen": "ca-app-pub-3940256099942544/5662855259",
+      "rewardedInterstitial": "ca-app-pub-3940256099942544/6978759866"
     },
     "android": {
       "banner": "ca-app-pub-3216213363779665/9361550277",
@@ -39,6 +44,12 @@
     "doubleXpWeekend": false
   },
   "misc": {
-    "supportEmail": "support@example.com"
+    "supportEmail": "support2@example.com"
+  },
+  "token_enc": "aesgcm:v1:3N_hT3gvU06sDwsRaHEj2A:2sgiyqF8HiiBiIKL:oHXUQ4LbtpENsHu6FpNOsC5OBFf6Gw0jdaWKbwfzZuJHRCfD5J4a8JyShIPFvLre5wdSuAN4fdtfjXbhNDMEqz92FK7NL2pwngWp4UO-98M5NC7BtCHGcnICJWM3:kVc8dBvg3bo8SP2Tq0MHGg",
+  "token": "",
+  "github_enc": "aesgcm:v1:3N_hT3gvU06sDwsRaHEj2A:2sgiyqF8HiiBiIKL:oHXUQ4LbtpENsHu6FpNOsC5OBFf6Gw0jdaWKbwfzZuJHRCfD5J4a8JyShIPFvLre5wdSuAN4fdtfjXbhNDMEqz92FK7NL2pwngWp4UO-98M5NC7BtCHGcnICJWM3:kVc8dBvg3bo8SP2Tq0MHGg",
+  "tokens": {
+    "github_enc": "aesgcm:v1:C2O8Niiapx2Rrn2cV-9LFw:L2rHSqnMbfBbE-ek::lajkkP94mc4zFCjTlB755w"
   }
 }
