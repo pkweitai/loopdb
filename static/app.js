@@ -1,5 +1,6 @@
 let files = [];
 let current = null;
+
 const $list = document.getElementById('file-list');
 const $content = document.getElementById('content');
 const $filename = document.getElementById('filename');
@@ -19,14 +20,14 @@ const $btnFetch = document.getElementById('btn-fetch');
 const $cloudStatus = document.getElementById('cloud-status');
 const $previewList = document.getElementById('preview-list');
 const $chkForce = document.getElementById('chk-force');
+const $tok = document.getElementById('gh-token');
 
-
-function setStatus(msg, ok=true) {
+function setStatus(msg, ok = true) {
   $status.textContent = msg;
   $status.style.color = ok ? '#1a7f37' : '#b91c1c';
 }
 
-function setCloudStatus(msg, ok=true) {
+function setCloudStatus(msg, ok = true) {
   $cloudStatus.textContent = msg;
   $cloudStatus.style.color = ok ? '#6b7280' : '#b91c1c';
 }
@@ -37,11 +38,12 @@ async function loadVersions() {
     const data = await res.json();
     if (data.ok) {
       const c = data.current, n = data.next;
-      $vers.textContent = `appVersion ${c.appVersion || '-'} → ${n.appVersion} | modelVersion ${c.modelVersion || '-'} → ${n.modelVersion}`;
+      $vers.textContent =
+        `appVersion ${c.appVersion || '-'} → ${n.appVersion} | modelVersion ${c.modelVersion || '-'} → ${n.modelVersion}`;
     } else {
       $vers.textContent = '(no appboot.json)';
     }
-  } catch (e) {
+  } catch {
     $vers.textContent = '(versions error)';
   }
 }
@@ -133,11 +135,32 @@ $btnBuild.onclick = async () => {
       body: JSON.stringify({
         passphrase: $pass.value,
         bumpApp: $chkApp.checked,
-        bumpModel: $chkModel.checked
+        bumpModel: $chkModel.checked,
+        token: $tok.value
       })
     });
+
+    if (!res.ok) {
+      const txt = await res.text().catch(()=>'');
+      $log.textContent = `HTTP ${res.status} ${res.statusText}\n\n${txt}`;
+      setStatus('Build failed (HTTP ' + res.status + ')', false);
+      return;
+    }
+
     const data = await res.json();
-    $log.textContent = `CMD: ${data.cmd || ''}\n\n--- STDOUT ---\n${data.stdout || ''}\n\n--- STDERR ---\n${data.stderr || ''}\n\nRC=${data.returncode}\n\nBUMP=${JSON.stringify(data.bump || {}, null, 2)}`;
+    $log.textContent =
+`CMD: ${data.cmd || ''}
+
+--- STDOUT ---
+${data.stdout || ''}
+
+--- STDERR ---
+${data.stderr || ''}
+
+RC=${data.returncode}
+
+BUMP=${JSON.stringify(data.bump || {}, null, 2)}
+OUT=${JSON.stringify(data.outputs || {}, null, 2)}`;
     setStatus(data.ok ? 'Build complete' : 'Build failed', !!data.ok);
   } catch (e) {
     $log.textContent = 'Error: ' + e;
@@ -153,24 +176,37 @@ $btnFetch.onclick = async () => {
   $btnFetch.disabled = true;
   setCloudStatus('Fetching...', true);
   $previewList.innerHTML = '';
+
+  // Abort in case server hangs
+  const ctl = new AbortController();
+  const t = setTimeout(() => ctl.abort(), 150000); // 150s hard stop
+
   try {
     const res = await fetch('/api/preview_fetch', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
+      signal: ctl.signal,
       body: JSON.stringify({
         url: $cloudUrl.value,
         passphrase: $pass.value,
-        force: !!$chkForce?.checked    // NEW: force fresh download
+        force: !!$chkForce?.checked
       })
     });
+
+    if (!res.ok) {
+      const txt = await res.text().catch(()=> '');
+      setCloudStatus('Failed: HTTP ' + res.status + ' ' + txt, false);
+      return;
+    }
+
     const data = await res.json();
     if (!data.ok) {
       setCloudStatus('Failed: ' + (data.error || 'unknown error'), false);
       return;
     }
+
     setCloudStatus(`Downloaded ${data.download_bytes} bytes. Decrypted. ${data.entries.length} files in zip.`);
 
-    // render list & make JSONs clickable
     const entries = data.entries || [];
     $previewList.innerHTML = '';
     for (const ent of entries) {
@@ -208,11 +244,11 @@ $btnFetch.onclick = async () => {
       }
     }
   } catch (e) {
-    setCloudStatus('Exception: ' + e, false);
+    setCloudStatus('Exception: ' + (e?.name === 'AbortError' ? 'request aborted' : e), false);
   } finally {
+    clearTimeout(t);
     $btnFetch.disabled = false;
   }
 };
-
 
 loadList();

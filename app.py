@@ -6,9 +6,13 @@ import shutil
 import subprocess
 import threading
 import webbrowser
+import base64
+import secrets
 from pathlib import Path
 from datetime import datetime, date
 from urllib.request import urlopen, Request
+from urllib.parse import urlparse, urlunparse, parse_qsl, urlencode
+
 from flask import Flask, render_template, request, jsonify, send_from_directory, abort
 
 try:
@@ -17,10 +21,51 @@ try:
 except Exception:
     pass
 
-# ---- Configuration ----
+# ─────────────────────────────────────────────────────────────────────────────
+# Defaults (no secrets hard-coded)
+# ─────────────────────────────────────────────────────────────────────────────
+DEFAULT_GITHUB_TOKEN = os.getenv('DEFAULT_GITHUB_TOKEN', '')
+DEFAULT_AES_PASSPHRASE = os.getenv('APPBOOT_TOKEN_KEY', 'pet1234')
+
+# AES-GCM helpers (encrypt only; decrypt happens client-side in app)
+try:
+    from Crypto.Cipher import AES
+    from Crypto.Protocol.KDF import scrypt
+except Exception:
+    AES = None
+    scrypt = None
+
+def _b64(x: bytes) -> str:
+    return base64.urlsafe_b64encode(x).decode('ascii').rstrip('=')
+
+def _aesgcm_encrypt(plaintext: str, passphrase: str) -> str:
+    """
+    Returns: aesgcm:v1:<salt_b64>:<nonce_b64>:<ct_b64>:<tag_b64>
+    """
+    if AES is None or scrypt is None:
+        raise RuntimeError("PyCryptodome not installed. `pip install pycryptodome`")
+    salt  = secrets.token_bytes(16)
+    key   = scrypt(passphrase.encode('utf-8'), salt, key_len=32, N=2**15, r=8, p=1)
+    nonce = secrets.token_bytes(12)
+    cipher = AES.new(key, AES.MODE_GCM, nonce=nonce)
+    ct, tag = cipher.encrypt_and_digest(plaintext.encode('utf-8'))
+    return "aesgcm:v1:{}:{}:{}:{}".format(_b64(salt), _b64(nonce), _b64(ct), _b64(tag))
+
+def _inject_encrypted_token(appboot: dict, token_plain: str, passphrase: str) -> dict:
+    enc = _aesgcm_encrypt(token_plain, passphrase or DEFAULT_AES_PASSPHRASE)
+    gh = appboot.setdefault('github', {})
+    gh['token_enc'] = enc
+    gh['token'] = ""  # avoid plaintext
+    toks = appboot.setdefault('tokens', {})
+    toks['github_enc'] = enc
+    return appboot
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Paths / config
+# ─────────────────────────────────────────────────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = (BASE_DIR / 'data' / 'js').resolve()
-PREVIEW_DIR = (DATA_DIR / '_preview').resolve()         # where we put the fetched/decrypted files
+PREVIEW_DIR = (DATA_DIR / '_preview').resolve()
 UNZIP_DIR = (PREVIEW_DIR / 'unzipped').resolve()
 APPBOOT_JSON = DATA_DIR / 'appboot.json'
 PAYLOAD = (BASE_DIR / 'payload.sh').resolve()
@@ -33,7 +78,9 @@ DEFAULT_CLOUD_URL = os.getenv(
 
 app = Flask(__name__)
 
-# ---------------- helpers ----------------
+# ─────────────────────────────────────────────────────────────────────────────
+# Helpers
+# ─────────────────────────────────────────────────────────────────────────────
 def _json_files():
     if not DATA_DIR.exists():
         return []
@@ -86,7 +133,8 @@ def _is_date_prefix(s: str) -> bool:
     return bool(re.match(r'^\d{4}-\d{2}-\d{2}', s or ''))
 
 def _today_str() -> str:
-    return date.today().isoformat()
+    from datetime import date as _d
+    return _d.today().isoformat()
 
 def _bump_model_version(ver: str) -> str:
     if _is_date_prefix(ver or ''):
@@ -111,16 +159,8 @@ def _set_versions(appboot: dict, app_v: str, model_v: str):
         appboot['model_version'] = model_v
     return appboot
 
-from urllib.parse import urlparse, urlunparse, parse_qsl, urlencode
-from datetime import datetime
-
 def _download(url: str, dest: Path, force: bool = False):
-    """
-    Download URL to dest.
-    If force=True, append a cache-busting query param and send no-cache headers.
-    """
     dest.parent.mkdir(parents=True, exist_ok=True)
-
     effective_url = url
     if force:
         pr = urlparse(url)
@@ -128,12 +168,10 @@ def _download(url: str, dest: Path, force: bool = False):
         q['_cb'] = datetime.utcnow().strftime('%Y%m%d%H%M%S%f')
         pr = pr._replace(query=urlencode(q))
         effective_url = urlunparse(pr)
-
     req = Request(
         effective_url,
         headers={
             'User-Agent': 'appboot-portal/1.0',
-            # best-effort cache busting at CDNs/proxies:
             'Cache-Control': 'no-cache, no-store, max-age=0',
             'Pragma': 'no-cache',
         }
@@ -143,14 +181,15 @@ def _download(url: str, dest: Path, force: bool = False):
     dest.write_bytes(data)
     return len(data)
 
-
 def _clear_preview_dirs():
     if PREVIEW_DIR.exists():
         shutil.rmtree(PREVIEW_DIR, ignore_errors=True)
     PREVIEW_DIR.mkdir(parents=True, exist_ok=True)
     UNZIP_DIR.mkdir(parents=True, exist_ok=True)
 
-# ---------------- routes ----------------
+# ─────────────────────────────────────────────────────────────────────────────
+# Routes
+# ─────────────────────────────────────────────────────────────────────────────
 @app.route('/')
 def index():
     files = _json_files()
@@ -161,11 +200,15 @@ def index():
             app_v, model_v = _extract_versions(ab)
     except Exception:
         pass
-    return render_template('index.html',
-                           files=files,
-                           app_v=app_v,
-                           model_v=model_v,
-                           default_cloud_url=DEFAULT_CLOUD_URL)
+    return render_template(
+        'index.html',
+        files=files,
+        app_v=app_v,
+        model_v=model_v,
+        default_cloud_url=DEFAULT_CLOUD_URL,
+        default_github_token=DEFAULT_GITHUB_TOKEN,
+        default_passphrase=DEFAULT_AES_PASSPHRASE,
+    )
 
 @app.route('/api/list')
 def api_list():
@@ -234,9 +277,19 @@ def api_build():
     passphrase = (body.get('passphrase') or '').strip()
     bump_app = bool(body.get('bumpApp', True))
     bump_model = bool(body.get('bumpModel', True))
+    token_in = (body.get('token') or '').strip()
+    token_plain = token_in if token_in else DEFAULT_GITHUB_TOKEN
 
     try:
         ab = _read_json(APPBOOT_JSON)
+
+        # 1) insert encrypted token
+        try:
+            _inject_encrypted_token(ab, token_plain, passphrase or DEFAULT_AES_PASSPHRASE)
+        except Exception as e:
+            return jsonify({'ok': False, 'error': f'Encrypt token failed: {e}'}), 500
+
+        # 2) bump versions
         cur_app, cur_model = _extract_versions(ab)
         next_app = _bump_semver(cur_app) if bump_app else cur_app
         next_model = _bump_model_version(cur_model) if bump_model else cur_model
@@ -246,12 +299,21 @@ def api_build():
             'current': {'appVersion': cur_app, 'modelVersion': cur_model},
             'next': {'appVersion': next_app, 'modelVersion': next_model},
         }
-    except Exception as e:
-        return jsonify({'ok': False, 'error': f'Failed to bump versions: {e}'}), 500
 
+        # 3) make a lightweight appboot.zip
+        import zipfile
+        appboot_zip = (DATA_DIR / 'appboot.zip')
+        with zipfile.ZipFile(str(appboot_zip), 'w', compression=zipfile.ZIP_DEFLATED) as z:
+            z.write(str(APPBOOT_JSON), arcname='appboot.json')
+
+    except Exception as e:
+        return jsonify({'ok': False, 'error': f'Failed to prep build: {e}'}), 500
+
+    # 4) call payload to produce app.zip/app.zip.enc (+ manifest)
     args = [str(PAYLOAD), '-u', '-s', 'data/js', '-d', 'data/js', '-o', 'app']
-    if passphrase:
-        args += ['-k', passphrase]
+    key_for_payload = passphrase or DEFAULT_AES_PASSPHRASE
+    if key_for_payload:
+        args += ['-k', key_for_payload]
 
     try:
         proc = subprocess.run(args, cwd=str(BASE_DIR), capture_output=True, text=True)
@@ -263,6 +325,11 @@ def api_build():
             'stdout': proc.stdout[-20000:],
             'stderr': proc.stderr[-20000:],
             'bump': bump_info,
+            'outputs': {
+                'app_zip': str((DATA_DIR / 'app.zip').resolve()),
+                'app_zip_enc': str((DATA_DIR / 'app.zip.enc').resolve()),
+                'appboot_zip': str((DATA_DIR / 'appboot.zip').resolve()),
+            }
         }), (200 if ok else 500)
     except Exception as e:
         return jsonify({'ok': False, 'error': str(e), 'bump': bump_info}), 500
@@ -278,7 +345,8 @@ def api_preview_fetch():
     data = request.get_json(force=True, silent=True) or {}
     url = (data.get('url') or DEFAULT_CLOUD_URL).strip()
     passphrase = (data.get('passphrase') or '').strip()
-    force = bool(data.get('force', False))  # NEW
+    key_for_decrypt = passphrase or DEFAULT_AES_PASSPHRASE
+    force = bool(data.get('force', False))
     try:
         _clear_preview_dirs()
         enc_path = PREVIEW_DIR / 'cloud.app.zip.enc'
@@ -287,11 +355,14 @@ def api_preview_fetch():
         # 1) download
         size = _download(url, enc_path, force=force)
 
-        # 2) decrypt via payload.sh --decrypt
-        args = [str(PAYLOAD), '--decrypt', '-i', str(enc_path), '-O', str(zip_path)]
-        if passphrase:
-            args += ['-k', passphrase]
-        proc = subprocess.run(args, cwd=str(BASE_DIR), capture_output=True, text=True)
+        # 2) decrypt via payload.sh --decrypt (timeout to avoid hanging)
+        args = [str(PAYLOAD), '--decrypt', '-i', str(enc_path), '-O', str(zip_path), '-k', key_for_decrypt]
+        from subprocess import TimeoutExpired
+        try:
+          proc = subprocess.run(args, cwd=str(BASE_DIR), capture_output=True, text=True, timeout=120)
+        except TimeoutExpired:
+          return jsonify({'ok': False, 'step': 'decrypt', 'error': 'decrypt timeout'}), 500
+
         if proc.returncode != 0:
             return jsonify({'ok': False,
                             'step': 'decrypt',
@@ -307,7 +378,6 @@ def api_preview_fetch():
             for info in z.infolist():
                 entries.append({'name': info.filename, 'size': info.file_size})
                 if info.filename.lower().endswith('.json'):
-                    # extract JSON to UNZIP_DIR for reading
                     target = UNZIP_DIR / info.filename
                     target.parent.mkdir(parents=True, exist_ok=True)
                     with z.open(info, 'r') as src, target.open('wb') as dst:
@@ -322,11 +392,7 @@ def api_preview_fetch():
 
 @app.route('/api/preview_read')
 def api_preview_read():
-    """
-    Read a JSON file that was extracted to UNZIP_DIR.
-    """
     name = request.args.get('name', '').strip()
-    # prevent path traversal
     name = name.lstrip('/').replace('\\', '/')
     if not name or '..' in name:
         return jsonify({'ok': False, 'error': 'invalid name'}), 400
@@ -335,7 +401,7 @@ def api_preview_read():
         return jsonify({'ok': False, 'error': f'not found: {name}'}), 404
     try:
         text = path.read_text(encoding='utf-8')
-        json.loads(text)  # validate
+        json.loads(text)
         return jsonify({'ok': True, 'name': name, 'text': text})
     except Exception as e:
         return jsonify({'ok': False, 'error': str(e)}), 400

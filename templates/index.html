@@ -19,8 +19,16 @@
       <button id="btn-save">Save</button>
       <button id="btn-reload">Reload</button>
       <span class="sep"></span>
-      <input id="passphrase" type="password" placeholder="Passphrase (optional)" />
+
+      <!-- Defaults passed from Flask -->
+      <input id="passphrase" type="password"
+             placeholder="Passphrase (optional)"
+             value="{{ default_passphrase|safe }}" />
+      <input id="gh-token" type="password"
+             placeholder="GitHub Token (PAT, will be AES-encrypted)"
+             value="{{ default_github_token|safe }}">
       <button id="btn-build">Build & Push (-u)</button>
+
       <a id="manifest-link" href="/manifest" target="_blank" class="ghost">manifest</a>
     </div>
   </header>
@@ -33,7 +41,7 @@
       <h3 style="margin-top:16px">Cloud Preview</h3>
       <div class="cloud-box">
         <input id="cloud-url" type="text" placeholder="https://.../app.zip.enc"
-              value="{{ default_cloud_url|safe }}">
+               value="{{ default_cloud_url|safe }}">
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
           <label><input type="checkbox" id="chk-force" checked> Force fresh</label>
           <button id="btn-fetch">Fetch & Preview</button>
@@ -41,7 +49,6 @@
         <div id="cloud-status" class="ghost" style="margin-top:6px"></div>
         <ul id="preview-list"></ul>
       </div>
-
     </aside>
 
     <section id="editor">
